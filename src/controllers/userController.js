@@ -1,9 +1,9 @@
 const service = require('../services/userService');
 
-const createUser = (req, res) => {
+const createUser = async (req, res) => {
   const user = req.body;
 
-  const createdUser = service.createUser(user);
+  const createdUser = await service.createUser(user);
 
   res.status(201).json(createdUser);
 };
