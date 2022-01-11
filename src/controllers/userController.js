@@ -13,7 +13,7 @@ const userLogin = async (req, res) => {
   const user = req.body;
 
   const { message, status, token } = await service.userLogin(user);
-
+  console.log(status);
   return res.status(statusCode[status]).json(token ? { token } : { message });
 };
 

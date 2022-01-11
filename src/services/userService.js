@@ -15,7 +15,7 @@ const createUser = async (user) => {
   if (!password) return error('"password" is required', 'BAD_REQUEST');
 
   if (password.length !== 6) {
-    return error('"password" must be 6 characters long', 'BAD_REQUEST');
+    return error('"password" length must be 6 characters long', 'BAD_REQUEST');
   }
 
   if (!/^[a-z\d]+@[a-z\d]+\.com$/.test(email)) {
