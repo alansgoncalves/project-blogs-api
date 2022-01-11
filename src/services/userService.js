@@ -1,11 +1,35 @@
 const { User } = require('../models');
+const JWT = require('../helpers/JWT');
+const error = require('../helpers/errors');
 
-console.log(User);
 const createUser = async (user) => {
   const { displayName, email, password, image } = user;
-  const createdUser = await User.create({ displayName, email, password, image });
+
+  if (displayName.length < 8) {
+    return error('"displayName" length must be at least 8 characters long', 'BAD_REQUEST');
+  }
+
+  if (!email) return error('"email" is required', 'BAD_REQUEST');
+
+  if (!password) return error('"password" is required', 'BAD_REQUEST');
+
+  if (password.length !== 6) {
+    return error('"password" must be 6 characters long', 'BAD_REQUEST');
+  }
+
+  if (!/^[a-z\d]+@[a-z\d]+\.com$/.test(email)) {
+    return error('"email" must be a valid email', 'BAD_REQUEST');
+  }
+
+  const userExists = await User.findOne({ where: { email } });
+
+  if (userExists) return error('User already registered', 'CONFLICT');
+
+  await User.create({ displayName, email, password, image });
+
+  const token = JWT({ email, password });
   
-  return createdUser;
+  return { status: 'CREATED', token };
 };
 
 module.exports = {
