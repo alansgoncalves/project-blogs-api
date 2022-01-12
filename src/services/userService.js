@@ -1,24 +1,13 @@
 /* eslint-disable */
 const { User } = require('../models');
 const JWT = require('../helpers/JWT');
-const { validateDisplay, validateEmail, validatePassword } = require('../validations/userValidate');
 
 const createUser = async ({ displayName, email, password, image }) => {
-  const getDisplay = validateDisplay(displayName);
-  if (getDisplay) return getDisplay;
-
-  const getPassword = validatePassword(password);
-  if (getPassword) return getPassword;
-
-  const getEmail = await validateEmail(email);
-  if (getEmail) return getEmail;
-  
-  console.log(getDisplay, getEmail, getPassword);
   await User.create({ displayName, email, password, image });
 
   const token = JWT({ email, password });
   
-  return { status: 'CREATED', token };
+  return { token };
 };
 
 // const userLogin = async (user) => {
