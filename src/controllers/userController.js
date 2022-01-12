@@ -5,7 +5,7 @@ const createUser = async (req, res) => {
   const user = req.body;
 
   const { message, status, token } = await service.createUser(user);
-
+  console.log(message, status, token);
   return res.status(statusCode[status]).json(token ? { token } : { message });
 };
 
