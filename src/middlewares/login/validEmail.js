@@ -14,6 +14,7 @@ const validateEmail = async (req, res, next) => {
     .json({ message: '"email" is not allowed to be empty' });
   } 
   
+  // Abaixo, função que checa se usuário não existe, para atender requisito 2
   const userExists = await User.findOne({ where: { email } });
   
   if (!userExists || userExists.dataValues.password !== password) {

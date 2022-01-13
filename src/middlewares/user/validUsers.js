@@ -13,7 +13,6 @@ const checkToken = (req, res, next) => {
   if (invalidToken) {
     return res.status(status.UNAUTHORIZED).json({ message: 'Expired or invalid token' });
   }
-
   next();
 };
 
