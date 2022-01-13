@@ -1,5 +1,5 @@
-const { User } = require('../models');
-const code = require('../helpers/statusCode');
+const { User } = require('../../models');
+const code = require('../../helpers/statusCode');
 
 const validateEmail = async (req, res, next) => {
   const { email } = req.body;

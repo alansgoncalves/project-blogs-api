@@ -9,14 +9,14 @@ const createUser = async (req, res) => {
   return res.status(statusCode.CREATED).json(token);
 };
 
-// const userLogin = async (req, res) => {
-//   const user = req.body;
+const userLogin = async (req, res) => {
+  const user = req.body;
 
-//   const { message, status, token } = await service.userLogin(user);
-//   return res.status(statusCode[status]).json(token ? { token } : { message });
-// };
+  const { message, status, token } = await service.userLogin(user);
+  return res.status(statusCode[status]).json(token ? { token } : { message });
+};
 
 module.exports = {
   createUser,
-  // userLogin,
+  userLogin,
 };

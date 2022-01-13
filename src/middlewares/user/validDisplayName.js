@@ -1,4 +1,4 @@
-const code = require('../helpers/statusCode');
+const code = require('../../helpers/statusCode');
 
 const validateDisplay = (req, res, next) => {
   const { displayName } = req.body;

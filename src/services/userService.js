@@ -10,29 +10,15 @@ const createUser = async ({ displayName, email, password, image }) => {
   return { token };
 };
 
-// const userLogin = async (user) => {
-//   const { email, password } = user;
+const userLogin = async ({ email, password }) => {
+  await User.findOne({ where: { email } });
 
-//   if (email === undefined) return error('"email" is required', 'BAD_REQUEST');
-
-//   if (password === undefined) return error('"password" is required', 'BAD_REQUEST');
-
-//   if (!email.length) return error('"email" is not allowed to be empty', 'BAD_REQUEST');
-
-//   if (!password.length) return error('"password" is not allowed to be empty', 'BAD_REQUEST');
-
-//   const userExists = await User.findOne({ where: { email } });
-
-//   if (!userExists || userExists.dataValues.password !== password) {
-//     return error('Invalid fields', 'BAD_REQUEST');
-//   }
-
-//   const token = JWT({ email, password });
+  const token = JWT({ email, password });
   
-//   return { status: 'OK', token };
-// };
+  return { status: 'OK', token };
+};
 
 module.exports = {
   createUser,
-  // userLogin,
+  userLogin,
 };

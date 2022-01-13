@@ -1,6 +1,6 @@
-const code = require('../helpers/statusCode');
+const code = require('../../helpers/statusCode');
 
-const validatePassword = (req, res, next) => {
+const validatePassword = async (req, res, next) => {
   const { password } = req.body;
 
   if (password === undefined) {
@@ -8,10 +8,10 @@ const validatePassword = (req, res, next) => {
     .json({ message: '"password" is required' });
   }
 
-  if (password.length !== 6) {
+  if (!password.length) {
     return res.status(code.BAD_REQUEST)
-    .json({ message: '"password" length must be 6 characters long' });
-  }
+    .json({ message: '"password" is not allowed to be empty' });
+  } 
   next();
 };
 
