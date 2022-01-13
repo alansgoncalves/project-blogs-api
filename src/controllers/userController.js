@@ -12,11 +12,21 @@ const createUser = async (req, res) => {
 const userLogin = async (req, res) => {
   const user = req.body;
 
-  const { message, status, token } = await service.userLogin(user);
-  return res.status(statusCode[status]).json(token ? { token } : { message });
+  const token = await service.userLogin(user);
+  return res.status(statusCode.OK).json(token);
+};
+
+const getAllUsers = async (req, res) => {
+  const auth = req.headers.authorization;
+
+  const users = await service.getAllUsers(auth);
+
+  // todo: Fix nested ternary.
+  return res.status(statusCode.OK).json(users);
 };
 
 module.exports = {
   createUser,
   userLogin,
+  getAllUsers,
 };

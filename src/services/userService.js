@@ -15,10 +15,17 @@ const userLogin = async ({ email, password }) => {
 
   const token = JWT({ email, password });
   
-  return { status: 'OK', token };
+  return { token };
+};
+
+const getAllUsers = async () => {
+  const users = await User.findAll({ attributes: { exclude: 'password' } });
+
+  return users;
 };
 
 module.exports = {
   createUser,
   userLogin,
+  getAllUsers,
 };
