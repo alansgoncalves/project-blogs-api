@@ -6,5 +6,6 @@ const checkToken = require('../middlewares/user/validUsers');
 const router = Router();
 
 router.post('/', checkToken, validateCategory, controller.createCategory);
+router.get('/', checkToken, controller.allCategories);
 
 module.exports = router;
