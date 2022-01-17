@@ -9,6 +9,12 @@ const createPost = async (token, blogPost) => {
   return createdBlogPost;
 };
 
+const getAllBlogPosts = async () => {
+  const blogPosts = await BlogPost.findAll({ include: ['categories', 'user'] });
+  return blogPosts;
+};
+
 module.exports = {
   createPost,
+  getAllBlogPosts,
 };
