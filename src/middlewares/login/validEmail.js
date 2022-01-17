@@ -21,6 +21,10 @@ const validateEmail = async (req, res, next) => {
     return res.status(code.BAD_REQUEST)
     .json({ message: 'Invalid fields' });
   }
+
+  const { id } = userExists;
+  req.userId = id;
+  
   next();
 };
 
