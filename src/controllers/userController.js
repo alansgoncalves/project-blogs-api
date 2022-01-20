@@ -32,9 +32,16 @@ const getUserById = async (req, res) => {
   return res.status(statusCode.OK).json(user);
 };
 
+const deleteMySelf = async (req, res) => {
+  const token = req.headers.authorization;
+  await service.deleteMySelf(token);
+  return res.status(statusCode.NO_CONTENT).json([]);
+};
+
 module.exports = {
   createUser,
   userLogin,
   getAllUsers,
   getUserById,
+  deleteMySelf,
 };

@@ -1,4 +1,4 @@
-/* eslint-disable */
+const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 const JWT = require('../helpers/JWT');
 
@@ -30,9 +30,18 @@ const getUserById = async (id) => {
   return user;
 };
 
+const deleteMySelf = async (token) => {
+  const { user: { email } } = jwt.decode(token, 'seusecrettoken'); 
+  const { dataValues: { id } } = await User.findOne({ where: { email } });
+  await User.destroy({
+    where: { id }
+  });
+};
+
 module.exports = {
   createUser,
   userLogin,
   getAllUsers,
   getUserById,
+  deleteMySelf,
 };
