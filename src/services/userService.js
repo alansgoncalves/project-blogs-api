@@ -34,7 +34,7 @@ const deleteMySelf = async (token) => {
   const { user: { email } } = jwt.decode(token, 'seusecrettoken'); 
   const { dataValues: { id } } = await User.findOne({ where: { email } });
   await User.destroy({
-    where: { id }
+    where: { id },
   });
 };
 
