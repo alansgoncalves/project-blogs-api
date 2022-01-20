@@ -1,5 +1,6 @@
+const jwt = require('jsonwebtoken');
 const code = require('../../helpers/statusCode');
-const { Category, BlogPost } = require('../../models');
+const { Category, BlogPost, User } = require('../../models');
 
 const validateBlogPost = async (req, res, next) => {
   const { title, content, categoryIds } = req.body;
@@ -34,7 +35,32 @@ const validateBlogById = async (req, res, next) => {
   next();
 };
 
+const validateUpdateBlog = async (req, res, next) => {
+  const { id } = req.params;
+  const { categoryIds, title, content } = req.body;
+  const { user: { email } } = jwt.decode(req.headers.authorization, 'seusecrettoken');
+  const { id: postId } = await User.findOne({ where: { email } });
+  const { userId } = await BlogPost.findOne({ where: { id: Number(id) } });
+  if (userId !== postId) { 
+    return res.status(code.UNAUTHORIZED).json({ message: 'Unauthorized user' }); 
+  }
+
+  if (categoryIds) {
+    return res.status(code.BAD_REQUEST).json({ message: 'Categories cannot be edited' });
+  }
+
+  if (!title) {
+    return res.status(code.BAD_REQUEST).json({ message: '"title" is required' });
+  }
+  
+  if (!content) {
+    return res.status(code.BAD_REQUEST).json({ message: '"content" is required' });
+  }
+  next();
+};
+
 module.exports = {
   validateBlogPost,
   validateBlogById,
+  validateUpdateBlog,
 };
