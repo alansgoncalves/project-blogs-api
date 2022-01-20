@@ -59,8 +59,20 @@ const validateUpdateBlog = async (req, res, next) => {
   next();
 };
 
+const validateDeleteBlog = async (req, res, next) => {
+  const { id } = req.params;
+  const { user: { email } } = jwt.decode(req.headers.authorization, 'seusecrettoken'); 
+  const { id: postId } = await User.findOne({ where: { email } }); 
+  const { dataValues: { userId } } = await BlogPost.findOne({ where: { id: Number(id) } }); 
+  if (userId !== postId) { 
+    return res.status(code.UNAUTHORIZED).json({ message: 'Unauthorized user' }); 
+  }
+  next();
+};
+
 module.exports = {
   validateBlogPost,
   validateBlogById,
   validateUpdateBlog,
+  validateDeleteBlog,
 };

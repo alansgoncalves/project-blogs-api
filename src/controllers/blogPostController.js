@@ -21,11 +21,15 @@ const getPostById = async (req, res) => {
 
 const updatePostById = async (req, res) => {
   const { id } = req.params;
-  // const { user } = req;
   const { title, content } = req.body;
-  // console.log(user);
   const update = await service.updatePostById(id, { title, content });
   return res.status(statusCode.OK).json(update);
+};
+
+const deletePostById = async (req, res) => {
+  const { id } = req.params;
+  const postDelete = await service.deletePostById(id);
+  return res.status(statusCode.NO_CONTENT).json(postDelete);
 };
 
 module.exports = {
@@ -33,4 +37,5 @@ module.exports = {
   getAllBlogPosts,
   getPostById,
   updatePostById,
+  deletePostById,
 };
