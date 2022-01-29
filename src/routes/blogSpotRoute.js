@@ -12,6 +12,7 @@ const {
 const router = Router();
 
 router.post('/', checkToken, validateBlogPost, controller.createPost);
+router.get('/search', checkToken, controller.searchPostByText);
 router.get('/', checkToken, controller.getAllBlogPosts);
 router.get('/:id', checkToken, validateBlogById, controller.getPostById);
 router.put('/:id', checkToken, validateUpdateBlog, controller.updatePostById);

@@ -32,10 +32,17 @@ const deletePostById = async (req, res) => {
   return res.status(statusCode.NO_CONTENT).json(postDelete);
 };
 
+const searchPostByText = async (req, res) => {
+  const { q } = req.query;
+  const searchPost = await service.searchPostByText(q);
+  return res.status(statusCode.OK).json(searchPost);
+};
+
 module.exports = {
   createPost,
   getAllBlogPosts,
   getPostById,
   updatePostById,
   deletePostById,
+  searchPostByText,
 };
